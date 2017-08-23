@@ -31,13 +31,14 @@ import java.text.DecimalFormat;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CryptoCurency.OnFragmentInteractionListener} interface
+ * {@link AltCoinCurency.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CryptoCurency#newInstance} factory method to
+ * Use the {@link AltCoinCurency#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CryptoCurency extends Fragment {
-    private static final String QueryURL = "https://api.quadrigacx.com/v2/ticker?book=";
+public class AltCoinCurency extends Fragment {
+    private static final String bitcoinURL = "https://api.quadrigacx.com/v2/ticker?book=btc_cad";
+    private static final String QueryURL = "https://bittrex.com/api/v1.1/public/getticker?market=";
 
     static SharedPreferences settings;
     static SharedPreferences.Editor editor;
@@ -49,15 +50,16 @@ public class CryptoCurency extends Fragment {
     private double price = 0;
     private double value = 0;
     private MainActivity activity;
+    private double bitcoinValue = 0;
 
     private OnFragmentInteractionListener mListener;
 
-    public CryptoCurency() {
+    public AltCoinCurency() {
         // Required empty public constructor
     }
 
-    public static CryptoCurency newInstance(String tmpName, String tmpQT, String tmpbook, String tmppicture, MainActivity global) {
-        CryptoCurency fragment = new CryptoCurency();
+    public static AltCoinCurency newInstance(String tmpName, String tmpQT, String tmpbook, String tmppicture, MainActivity global) {
+        AltCoinCurency fragment = new AltCoinCurency();
         fragment.QT = Double.parseDouble(tmpQT);
         fragment.name = tmpName;
         fragment.book = tmpbook;
@@ -83,9 +85,15 @@ public class CryptoCurency extends Fragment {
         //Get Price
         try{
             // Create URL
-            String resultMessage = getResponseText(QueryURL+book);
+            String resultMessage = getResponseText(bitcoinURL);
             JSONObject response = new JSONObject(resultMessage);
-            price = response.getDouble("last");
+            bitcoinValue = response.getDouble("last");
+
+            resultMessage = getResponseText(QueryURL+book);
+            response = new JSONObject(resultMessage);
+            double tmpValue = response.getJSONObject("result").getDouble("Last");
+
+            price = bitcoinValue*tmpValue;
 
         } catch (Exception e){
             Log.e("ERROR",e.toString());
@@ -112,7 +120,7 @@ public class CryptoCurency extends Fragment {
 
         ImageView imageView = (ImageView)v.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View vv) {
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle("Set Quantity");
                 final EditText input = new EditText(activity);
@@ -148,7 +156,7 @@ public class CryptoCurency extends Fragment {
             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             imageView.setImageBitmap(bmp);
 
-        } catch (java.io.IOException e){
+        } catch (IOException e){
             //TODO: add error handling
         }
 

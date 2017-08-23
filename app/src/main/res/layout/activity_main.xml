@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/totalValueLbl"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -47,6 +47,8 @@
             android:layout_marginRight="11dp"
             android:background="@android:color/holo_green_light"
             android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="0"
             android:textSize="30sp" />
     </RelativeLayout>
