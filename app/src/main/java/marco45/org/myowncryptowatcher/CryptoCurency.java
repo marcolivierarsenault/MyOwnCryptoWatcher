@@ -117,7 +117,7 @@ public class CryptoCurency extends Fragment {
                 builder.setTitle("Set Quantity");
                 final EditText input = new EditText(activity);
 
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
