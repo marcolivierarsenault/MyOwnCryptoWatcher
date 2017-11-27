@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity
 
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        allCrypto.add(CryptoCurency.newInstance("Bitcoin",settings.getString("Bitcoin", "0"),"btc_cad","https://bitcoin.org/img/icons/opengraph.png",this));
+        allCrypto.add(CryptoCurency.newInstance("Bitcoin",settings.getString("Bitcoin", "0"),"btc_cad","https://files.coinmarketcap.com/static/img/coins/32x32/bitcoin.png",this));
         allCrypto.add(CryptoCurency.newInstance("Ethereum",settings.getString("Ethereum", "0"),"eth_cad","https://i.imgur.com/wRNT3aL.png",this));
-        allCrypto.add(CryptoCurency.newInstance("Bitcoin Cash",settings.getString("Bitcoin Cash","0"),"bch_cad","https://bitcoin.org/img/icons/opengraph.png",this));
+        allCrypto.add(CryptoCurency.newInstance("Bitcoin Cash",settings.getString("Bitcoin Cash","0"),"bch_cad","https://files.coinmarketcap.com/static/img/coins/32x32/bitcoin-cash.png",this));
+        allCrypto.add(CryptoCurency.newInstance("Bitcoin Gold",settings.getString("Bitcoin Gold","0"),"btg_cad","https://files.coinmarketcap.com/static/img/coins/32x32/bitcoin-gold.png",this));
 
         altCoin.add(AltCoinCurency.newInstance("STORJ",settings.getString("STORJ", "0"),"BTC-STORJ","https://i.imgur.com/xiEC31X.png",this));
 
