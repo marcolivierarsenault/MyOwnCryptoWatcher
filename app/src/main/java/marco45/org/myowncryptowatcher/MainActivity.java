@@ -21,10 +21,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements CryptoCurency.OnFragmentInteractionListener, AltCoinCurency.OnFragmentInteractionListener{
+        implements CryptoCurency.OnFragmentInteractionListener, AltCoinCurency.OnFragmentInteractionListener, BitfinexAltCoinCurency.OnFragmentInteractionListener{
 
     static ArrayList<CryptoCurency> allCrypto = new ArrayList<CryptoCurency>();
     static ArrayList<AltCoinCurency> altCoin = new ArrayList<AltCoinCurency>();
+    static ArrayList<BitfinexAltCoinCurency> altBittrexCoin = new ArrayList<BitfinexAltCoinCurency>();
 
     static SharedPreferences settings;
     static SharedPreferences.Editor editor;
@@ -46,8 +47,10 @@ public class MainActivity extends AppCompatActivity
         allCrypto.add(CryptoCurency.newInstance("Ethereum",settings.getString("Ethereum", "0"),"eth_cad","https://i.imgur.com/wRNT3aL.png",this));
         allCrypto.add(CryptoCurency.newInstance("Bitcoin Cash",settings.getString("Bitcoin Cash","0"),"bch_cad","https://files.coinmarketcap.com/static/img/coins/128x128/bitcoin-cash.png",this));
         allCrypto.add(CryptoCurency.newInstance("Bitcoin Gold",settings.getString("Bitcoin Gold","0"),"btg_cad","https://files.coinmarketcap.com/static/img/coins/128x128/bitcoin-gold.png",this));
+        altCoin.add(AltCoinCurency.newInstance("Dash",settings.getString("Dash","0"),"BTC-DASH","https://files.coinmarketcap.com/static/img/coins/128x128/dash.png",this));
 
         altCoin.add(AltCoinCurency.newInstance("STORJ",settings.getString("STORJ", "0"),"BTC-STORJ","https://i.imgur.com/xiEC31X.png",this));
+        altBittrexCoin.add(BitfinexAltCoinCurency.newInstance("IOTA",settings.getString("IOTA", "0"),"iotbtc","https://files.coinmarketcap.com/static/img/coins/128x128/iota.png",this));
 
         for (CryptoCurency current : allCrypto){
             getSupportFragmentManager().beginTransaction()
@@ -55,6 +58,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         for (AltCoinCurency current : altCoin){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.cryptoLayout, current).commit();
+        }
+
+        for (BitfinexAltCoinCurency current : altBittrexCoin){
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.cryptoLayout, current).commit();
         }
@@ -93,6 +101,10 @@ public class MainActivity extends AppCompatActivity
 
 
         for (AltCoinCurency current : altCoin){
+            masterValue += current.getValue();
+        }
+
+        for (BitfinexAltCoinCurency current : altBittrexCoin){
             masterValue += current.getValue();
         }
         TextView totalValue = (TextView)findViewById(R.id.totalValueLbl);
